@@ -1,3 +1,19 @@
 <resources>
+    <!-- Main -->
     <string name="app_name">Ship Happens</string>
+    <string name="rating_name">Review</string>
+
+    <!-- CompanyActivity -->
+    <string name="add_review">Add review</string>
+    <string name="reviews_title">Reviews:</string>
+
+    <!-- RatingActivity -->
+    <string name="explain_rating">Explain your rating&#8230;</string>
+    <string name="submit_button_label">Submit</string>
+
+    <!-- Accessibility -->
+    <string name="company_logo">Company logo</string>
+
+    <!-- Demo only -->
+    <string name="temp_company_name">Company Name</string>
 </resources>
