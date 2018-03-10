@@ -17,8 +17,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RatingActivity"
-            android:label="@string/rating_name"
+            android:name=".ReviewActivity"
+            android:label="@string/review_name"
             android:parentActivityName=".CompanyActivity">
         </activity>
     </application>

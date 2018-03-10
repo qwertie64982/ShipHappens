@@ -1,6 +1,17 @@
+/**
+ * An app for truckers to share information on which companies to work with or avoid.
+ *
+ * @author Maxwell Sherman
+ *
+ * @version v0.3-demo
+ */
+
 package com.qwertie64982.shiphappens;
 
-public class Rating {
+/**
+ * Review object, used to store an individual review from a user
+ */
+public class Review {
     private String author;
     private String message;
     private int rating;
@@ -8,7 +19,7 @@ public class Rating {
     /**
      * EVC
      */
-    public Rating() {
+    public Review() {
         this.author = "NO NAME";
         this.message = "NO MESSAGE";
         this.rating = 3;
@@ -20,7 +31,7 @@ public class Rating {
      * @param message author's message body
      * @param rating author's rating, between 1 and 5
      */
-    public Rating(String author, String message, int rating) {
+    public Review(String author, String message, int rating) {
         this.author = author;
         this.message = message;
         this.rating = rating;
@@ -28,7 +39,7 @@ public class Rating {
 
     /**
      * toString override
-     * @return Name of rating's author
+     * @return Name of review's author
      */
     @Override
     public String toString() {

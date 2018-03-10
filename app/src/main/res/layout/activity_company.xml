@@ -41,7 +41,7 @@
             android:textStyle="bold" />
 
         <com.qwertie64982.shiphappens.NonScrollListView
-            android:id="@+id/ratingsListView"
+            android:id="@+id/reviewsListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
