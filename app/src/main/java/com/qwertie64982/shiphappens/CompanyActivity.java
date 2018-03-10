@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 // TODO: Proper documentation. Too tired right now but it's simple enough, I'll figure it out
 
+// TODO: What to display if the ListView is empty
+
 public class CompanyActivity extends AppCompatActivity {
     private final String TAG = "CompanyActivity";
     private final int SUBMIT_RATING_REQUEST_CODE = 0;
@@ -31,6 +33,8 @@ public class CompanyActivity extends AppCompatActivity {
     private final String POST_AUTHOR = "author";
     private final String POST_MESSAGE = "message";
     private final String POST_RATING = "rating";
+
+    final String authorName = "John Doe";
 
     private boolean hasLeftReview;
     private ArrayList<Rating> ratingArrayList;
@@ -59,6 +63,7 @@ public class CompanyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CompanyActivity.this, RatingActivity.class);
+                intent.putExtra(POST_AUTHOR, authorName);
                 startActivityForResult(intent, SUBMIT_RATING_REQUEST_CODE);
             }
         });
@@ -79,11 +84,10 @@ public class CompanyActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == SUBMIT_RATING_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            String author = data.getStringExtra(POST_AUTHOR);
             String message = data.getStringExtra(POST_MESSAGE);
             int rating = data.getIntExtra(POST_RATING, 3); // default of 3 so an error won't skew things
 
-            Rating newRating = new Rating(author, message, rating);
+            Rating newRating = new Rating(authorName, message, rating);
             Log.d(TAG, "onActivityResult: Received rating: " + newRating);
 
             ratingArrayList.add(newRating);
