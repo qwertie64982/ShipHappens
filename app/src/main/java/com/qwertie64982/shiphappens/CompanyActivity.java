@@ -2,27 +2,31 @@
  * An app for truckers to share information on which companies to work with or avoid.
  *
  * @author Maxwell Sherman
- *
- * @version v0.3-demo
  */
 
 package com.qwertie64982.shiphappens;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 // TODO: Credit
 // Icon made by Freepik (http://www.freepik.com/) from www.flaticon.com (link)
-
-// TODO: About menu for credit and whatnot
 
 // TODO: Long click brings up dialog to delete
 
@@ -40,6 +44,7 @@ public class CompanyActivity extends AppCompatActivity {
     // Main
     private final String TAG = "CompanyActivity";
     private final int SUBMIT_REVIEW_REQUEST_CODE = 0;
+    private final String GITHUB_URL = "https://github.com/qwertie64982/ShipHappens";
 
     // Intent keys
     private final String POST_AUTHOR = "author";
@@ -122,6 +127,45 @@ public class CompanyActivity extends AppCompatActivity {
             reviewArrayAdapter.notifyDataSetChanged();
             hasLeftReview = true;
             addReviewButton.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Initializes the options menu
+     * @param menu Menu to be displayed
+     * @return true if the menu should be displayed, false otherwise
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_company, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * Runs when a menu item is selected
+     * @param item which item was selected
+     * @return true if the event was handled, false otherwise
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.aboutMenuItem:
+                AlertDialog.Builder builder = new AlertDialog.Builder(CompanyActivity.this);
+                builder.setTitle(R.string.about_title)
+                        .setMessage(R.string.about_message)
+                        .setPositiveButton(R.string.button_label_ok, null)
+                        .setNeutralButton(R.string.github_button, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_URL));
+                                startActivity(intent);
+                            }
+                        });
+                builder.create().show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

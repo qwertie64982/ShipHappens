@@ -5,6 +5,6 @@
 
     <item
         android:id="@+id/submitMenuItem"
-        android:title="@string/submit_menu_button_label"
+        android:title="@string/submit_menu_item"
         app:showAsAction="ifRoom"/>
 </menu>

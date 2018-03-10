@@ -2,16 +2,14 @@
  * An app for truckers to share information on which companies to work with or avoid.
  *
  * @author Maxwell Sherman
- *
- * @version v0.3-demo
  */
 
 package com.qwertie64982.shiphappens;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;

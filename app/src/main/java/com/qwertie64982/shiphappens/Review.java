@@ -2,8 +2,6 @@
  * An app for truckers to share information on which companies to work with or avoid.
  *
  * @author Maxwell Sherman
- *
- * @version v0.3-demo
  */
 
 package com.qwertie64982.shiphappens;
