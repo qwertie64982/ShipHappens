@@ -7,17 +7,18 @@
     <!-- CompanyActivity -->
     <string name="about_menu_item">About</string>
     <string name="about_title">About this app</string>
-    <string name="about_message">This is the demo version of the app.\n\nAuthor: Maxwell Sherman\n\nGithub: @Qwertie64982</string>
+    <string name="about_message">This is the demo version of the app.\n\nAuthor: Maxwell Sherman\nGithub: @Qwertie64982\n\nIcon made by Freepik from www.flaticon.com</string>
     <string name="github_button">GitHub</string>
     <string name="add_review">Add review</string>
     <string name="reviews_title">Reviews:</string>
+    <string name="no_reviews">No reviews yet!</string>
 
     <!-- ReviewActivity -->
     <string name="submit_menu_item">Submit</string>
     <string name="posting_as_author">%1$s:</string>
     <string name="explain_rating">Explain your rating&#8230;</string>
     <string name="character_count">%1$d/%2$d</string>
-    <string name="incomplete_entry_toast">You must enter a star rating and comments to submit.</string>
+    <string name="incomplete_entry_toast">You must enter comments and a star rating to submit.</string>
     <string name="review_warning_title">Discard review?</string>
     <string name="review_warning_message">If you leave without submitting, your review will be lost.</string>
     <string name="review_warning_leave">Leave</string>

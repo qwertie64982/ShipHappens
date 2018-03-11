@@ -6,10 +6,13 @@
 
 package com.qwertie64982.shiphappens;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Review object, used to store an individual review from a user
  */
-public class Review {
+public class Review implements Parcelable{
     private String author;
     private String message;
     private int rating;
@@ -35,11 +38,50 @@ public class Review {
         this.rating = rating;
     }
 
+    public Review(Parcel in) {
+        this.author = in.readString();
+        this.message = in.readString();
+        this.rating = in.readInt();
+    }
+
     /**
-     * toString override
-     * @return Name of review's author
+     * Describes the contents
+     * @return 0 since this object does not include file descriptors
      */
     @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Packs the Review object into a Parcel
+     * @param parcel Parcel that this Review will be packed into
+     * @param i additional flags
+     */
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(author);
+        parcel.writeString(message);
+        parcel.writeInt(rating);
+    }
+
+    /**
+     * Parcelable creator
+     */
+    public static final Parcelable.Creator<Review> CREATOR = new Parcelable.Creator<Review>() {
+        public Review createFromParcel(Parcel in) {
+            return new Review(in);
+        }
+
+        public Review[] newArray(int size) {
+            return new Review[size];
+        }
+    };
+
+    /**
+     * toString override
+     * @return Review object as a string
+     */
     public String toString() {
         return this.author + ", " + this.message + ", " + this.rating;
     }

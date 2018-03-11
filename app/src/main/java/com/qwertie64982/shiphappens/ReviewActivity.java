@@ -53,6 +53,9 @@ public class ReviewActivity extends AppCompatActivity {
     private EditText messageEditText;
     private TextView characterCountTextView;
 
+    // Logic
+    private AlertDialog exitWarningDialog;
+
     /**
      * onCreate
      * @param savedInstanceState savedInstanceState Bundle (unused)
@@ -121,6 +124,18 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     /**
+     * onStop
+     * Dismisses any open dialogs so they don't leak
+     */
+    @Override
+    protected void onStop() {
+        if (exitWarningDialog != null) {
+            exitWarningDialog.dismiss();
+        }
+        super.onStop();
+    }
+
+    /**
      * Initializes the options menu
      * @param menu Menu to be displayed
      * @return true if the menu should be displayed, false otherwise
@@ -152,7 +167,10 @@ public class ReviewActivity extends AppCompatActivity {
                                 }
                             })
                             .setNegativeButton(R.string.review_warning_stay, null);
-                    builder.create().show();
+                    exitWarningDialog = builder.create();
+                    exitWarningDialog.show();
+                } else {
+                    finish();
                 }
                 return true;
             case R.id.submitMenuItem:
@@ -192,7 +210,10 @@ public class ReviewActivity extends AppCompatActivity {
                         }
                     })
                     .setNegativeButton(R.string.review_warning_stay, null);
-            builder.create().show();
+            exitWarningDialog = builder.create();
+            exitWarningDialog.show();
+        } else {
+            finish();
         }
     }
 }

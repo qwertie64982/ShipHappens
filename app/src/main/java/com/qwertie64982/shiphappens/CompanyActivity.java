@@ -25,17 +25,19 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-// TODO: Credit
-// Icon made by Freepik (http://www.freepik.com/) from www.flaticon.com (link)
+// TODO: make a custom layout with name, rating, and comments (first 50 chars max, then ellipsis)
 
-// TODO: Long click brings up dialog to delete
+// TODO: Long click ListView item brings up dialog to delete
 
-// TODO: What to display if the ListView is empty
+// TODO: Click ListView item brings up ReviewActivity but is not editable
+
+// TODO: Average star rating
 
 // Long term: When the intent from ReviewActivity is received, add the user's review to a special
 //            location so they can edit/delete it.
 //            This is all once Firebase is implemented, of course.
 //            Once there are multiple companies, Firebase will give their info and fill the Views.
+//            It should refresh when starting the activity, but not when rotating the screen.
 
 /**
  * Activity where the user can view reviews for a company
@@ -46,6 +48,10 @@ public class CompanyActivity extends AppCompatActivity {
     private final int SUBMIT_REVIEW_REQUEST_CODE = 0;
     private final String GITHUB_URL = "https://github.com/qwertie64982/ShipHappens";
 
+    // SavedInstanceState keys
+    private final String HAS_LEFT_REVIEW = "hasLeftReview";
+    private final String REVIEW_ARRAY_LIST = "reviewArrayList";
+
     // Intent keys
     private final String POST_AUTHOR = "author";
     private final String POST_MESSAGE = "message";
@@ -55,16 +61,18 @@ public class CompanyActivity extends AppCompatActivity {
     final String authorName = "John Doe";
 
     // Views
-    Button addReviewButton;
+    private Button addReviewButton;
+    private TextView noReviewsTextView;
 
     // Logic
     private boolean hasLeftReview;
     private ArrayList<Review> reviewArrayList;
     private ArrayAdapter<Review> reviewArrayAdapter;
+    private AlertDialog aboutDialog;
 
     /**
      * onCreate
-     * @param savedInstanceState savedInstanceState Bundle (unused)
+     * @param savedInstanceState things that need to be preserved when the Activity is recreated
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +86,11 @@ public class CompanyActivity extends AppCompatActivity {
         }
 
         // this will be determined by Firebase in the future
-        hasLeftReview = false;
+        if (savedInstanceState != null) {
+            hasLeftReview = savedInstanceState.getBoolean(HAS_LEFT_REVIEW);
+        } else {
+            hasLeftReview = false;
+        }
 
         addReviewButton = (Button) findViewById(R.id.addReviewButton);
         if (hasLeftReview) {
@@ -94,14 +106,34 @@ public class CompanyActivity extends AppCompatActivity {
             }
         });
 
-        reviewArrayList = new ArrayList<>();
-        // this is were we pull the existing reviews from Firebase
-        reviewArrayList.add(new Review("Test Name", "Test message", 3));
+        if (savedInstanceState != null) {
+            reviewArrayList = (ArrayList<Review>) savedInstanceState.<Review>getParcelableArrayList(REVIEW_ARRAY_LIST);
+        } else {
+            reviewArrayList = new ArrayList<>();
+        }
 
-        // TODO: make a custom layout with name, rating, and comments
+        // this is were we pull the existing reviews from Firebase
+        // the stuff that happens after this should happen after the AsyncTask finishes
+        noReviewsTextView = (TextView) findViewById(R.id.noReviewsTextView);
+        if (reviewArrayList.size() > 0) {
+            noReviewsTextView.setVisibility(View.GONE);
+        }
+
         reviewArrayAdapter = new ArrayAdapter<Review>(this, android.R.layout.simple_list_item_1, reviewArrayList);
         NonScrollListView reviewsListView = (NonScrollListView) findViewById(R.id.reviewsListView);
         reviewsListView.setAdapter(reviewArrayAdapter);
+    }
+
+    /**
+     * onStop
+     * Dismisses any open dialogs so they don't leak
+     */
+    @Override
+    protected void onStop() {
+        if (aboutDialog != null) {
+            aboutDialog.dismiss();
+        }
+        super.onStop();
     }
 
     /**
@@ -127,6 +159,7 @@ public class CompanyActivity extends AppCompatActivity {
             reviewArrayAdapter.notifyDataSetChanged();
             hasLeftReview = true;
             addReviewButton.setVisibility(View.GONE);
+            noReviewsTextView.setVisibility(View.GONE);
         }
     }
 
@@ -162,10 +195,18 @@ public class CompanyActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         });
-                builder.create().show();
+                aboutDialog = builder.create();
+                aboutDialog.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(HAS_LEFT_REVIEW, hasLeftReview);
+        outState.putParcelableArrayList(REVIEW_ARRAY_LIST, reviewArrayList);
+        super.onSaveInstanceState(outState);
     }
 }
