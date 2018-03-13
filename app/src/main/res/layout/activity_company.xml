@@ -22,6 +22,18 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/temp_company_logo" />
 
+        <RatingBar
+            android:id="@+id/averageRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="0"
+            android:stepSize="0.1"
+            android:theme="@style/RatingBar" />
+
         <Button
             android:id="@+id/addReviewButton"
             android:layout_width="match_parent"

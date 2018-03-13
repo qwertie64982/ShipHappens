@@ -38,10 +38,22 @@ public class Review implements Parcelable{
         this.rating = rating;
     }
 
+    /**
+     * Parcel constructor
+     * @param in input Parcel
+     */
     public Review(Parcel in) {
         this.author = in.readString();
         this.message = in.readString();
         this.rating = in.readInt();
+    }
+
+    /**
+     * Rating getter
+     * @return rating value
+     */
+    public int getRating() {
+        return rating;
     }
 
     /**

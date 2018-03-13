@@ -9,6 +9,7 @@ package com.qwertie64982.shiphappens;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Rating;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -21,17 +22,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-// TODO: make a custom layout with name, rating, and comments (first 50 chars max, then ellipsis)
+// TODO: Custom ArrayAdapter layout with name, rating, and comments (first 50 chars max, then ellipsis)
+// there is a "Small" RatingBar style that would work well for this
 
-// TODO: Long click ListView item brings up dialog to delete
+// TODO: My item is at the top, and I can edit/delete it
 
-// TODO: Click ListView item brings up ReviewActivity but is not editable
-
-// TODO: Average star rating
+// TODO: Click ListView item brings up scrollable Dialog with their review in it
 
 // Long term: When the intent from ReviewActivity is received, add the user's review to a special
 //            location so they can edit/delete it.
@@ -63,6 +64,7 @@ public class CompanyActivity extends AppCompatActivity {
     // Views
     private Button addReviewButton;
     private TextView noReviewsTextView;
+    private RatingBar averageRatingBar;
 
     // Logic
     private boolean hasLeftReview;
@@ -110,6 +112,8 @@ public class CompanyActivity extends AppCompatActivity {
             reviewArrayList = (ArrayList<Review>) savedInstanceState.<Review>getParcelableArrayList(REVIEW_ARRAY_LIST);
         } else {
             reviewArrayList = new ArrayList<>();
+            reviewArrayList.add(new Review("Test name", "This is a test message", 3));
+            reviewArrayList.add(new Review("Bob Smith", "I'm saying something different", 4));
         }
 
         // this is were we pull the existing reviews from Firebase
@@ -122,6 +126,9 @@ public class CompanyActivity extends AppCompatActivity {
         reviewArrayAdapter = new ArrayAdapter<Review>(this, android.R.layout.simple_list_item_1, reviewArrayList);
         NonScrollListView reviewsListView = (NonScrollListView) findViewById(R.id.reviewsListView);
         reviewsListView.setAdapter(reviewArrayAdapter);
+
+        averageRatingBar = (RatingBar) findViewById(R.id.averageRatingBar);
+        updateAverageRatingBar();
     }
 
     /**
@@ -157,6 +164,7 @@ public class CompanyActivity extends AppCompatActivity {
             reviewArrayList.add(newReview);
             Log.d(TAG, "onActivityResult: List now contains: " + reviewArrayList);
             reviewArrayAdapter.notifyDataSetChanged();
+            updateAverageRatingBar();
             hasLeftReview = true;
             addReviewButton.setVisibility(View.GONE);
             noReviewsTextView.setVisibility(View.GONE);
@@ -203,10 +211,27 @@ public class CompanyActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Runs whenever the instance is temporarily saved
+     * @param outState Bundle given to onCreate when the instance is loaded again
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putBoolean(HAS_LEFT_REVIEW, hasLeftReview);
         outState.putParcelableArrayList(REVIEW_ARRAY_LIST, reviewArrayList);
         super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * Updates averageRatingBar with every review from reviewArrayList
+     */
+    private void updateAverageRatingBar() {
+        if (reviewArrayList.size() > 0) {
+            float total = 0;
+            for (Review listViewReview : reviewArrayList) {
+                total += listViewReview.getRating();
+            }
+            averageRatingBar.setRating(total / reviewArrayList.size());
+        }
     }
 }

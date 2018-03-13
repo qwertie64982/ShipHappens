@@ -27,7 +27,8 @@
             android:layout_margin="5dp"
             android:isIndicator="false"
             android:numStars="5"
-            android:stepSize="1" />
+            android:stepSize="1"
+            android:theme="@style/RatingBar" />
 
         <MultiAutoCompleteTextView
             android:id="@+id/messageEditText"
