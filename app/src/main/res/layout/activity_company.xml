@@ -27,12 +27,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="5dp"
+            android:layout_marginTop="5dp"
             android:isIndicator="true"
             android:numStars="5"
             android:rating="0"
             android:stepSize="0.1"
             android:theme="@style/RatingBar" />
+
+        <TextView
+            android:id="@+id/numberReviewsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/black" />
 
         <Button
             android:id="@+id/addReviewButton"

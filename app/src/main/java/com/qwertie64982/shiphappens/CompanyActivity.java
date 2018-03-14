@@ -39,6 +39,9 @@ import java.util.ArrayList;
 //            This is all once Firebase is implemented, of course.
 //            Once there are multiple companies, Firebase will give their info and fill the Views.
 //            It should refresh when starting the activity, but not when rotating the screen.
+//            When refreshing, this should be a method that includes updating all the UI as well.
+// Long term: Fix average rating bar so it shows values with more accuracy than 0.5
+//            And maybe add "Terrible"/"Bad"/"OK"/"Good"/"Excellent" or whatever Google Maps has
 
 /**
  * Activity where the user can view reviews for a company
@@ -62,6 +65,7 @@ public class CompanyActivity extends AppCompatActivity {
     final String authorName = "John Doe";
 
     // Views
+    private TextView numberReviewsTextView;
     private Button addReviewButton;
     private TextView noReviewsTextView;
     private RatingBar averageRatingBar;
@@ -123,6 +127,9 @@ public class CompanyActivity extends AppCompatActivity {
             noReviewsTextView.setVisibility(View.GONE);
         }
 
+        numberReviewsTextView = (TextView) findViewById(R.id.numberReviewsTextView);
+        numberReviewsTextView.setText(getString(R.string.number_reviews, reviewArrayList.size()));
+
         reviewArrayAdapter = new ArrayAdapter<Review>(this, android.R.layout.simple_list_item_1, reviewArrayList);
         NonScrollListView reviewsListView = (NonScrollListView) findViewById(R.id.reviewsListView);
         reviewsListView.setAdapter(reviewArrayAdapter);
@@ -164,10 +171,14 @@ public class CompanyActivity extends AppCompatActivity {
             reviewArrayList.add(newReview);
             Log.d(TAG, "onActivityResult: List now contains: " + reviewArrayList);
             reviewArrayAdapter.notifyDataSetChanged();
+
             updateAverageRatingBar();
+
             hasLeftReview = true;
             addReviewButton.setVisibility(View.GONE);
             noReviewsTextView.setVisibility(View.GONE);
+
+            numberReviewsTextView.setText(getString(R.string.number_reviews, reviewArrayList.size()));
         }
     }
 
