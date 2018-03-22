@@ -28,12 +28,11 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-// TODO: Custom ArrayAdapter layout with name, rating, and comments (first 50 chars max, then ellipsis)
-// there is a "Small" RatingBar style that would work well for this
-
 // TODO: My item is at the top, and I can edit/delete it
 
 // TODO: Click ListView item brings up scrollable Dialog with their review in it
+
+// TODO: Date reviews and sort them by date
 
 // Long term: When the intent from ReviewActivity is received, add the user's review to a special
 //            location so they can edit/delete it.
@@ -75,7 +74,8 @@ public class CompanyActivity extends AppCompatActivity {
     // Logic
     private boolean hasLeftReview;
     private ArrayList<Review> reviewArrayList;
-    private ArrayAdapter<Review> reviewArrayAdapter;
+//    private ArrayAdapter<Review> reviewArrayAdapter; /////////////////////////
+    private ReviewArrayAdapter reviewArrayAdapter;
     private AlertDialog aboutDialog;
     DecimalFormat ratingFormat;
 
@@ -121,7 +121,7 @@ public class CompanyActivity extends AppCompatActivity {
         } else {
             reviewArrayList = new ArrayList<>();
             reviewArrayList.add(new Review("Test name", "This is a test message", 3));
-            reviewArrayList.add(new Review("Bob Smith", "I'm saying something different", 4));
+            reviewArrayList.add(new Review("Bob Smith", "I'm saying something longer than what the previous person said", 4));
         }
 
         // this is were we pull the existing reviews from Firebase
@@ -134,7 +134,7 @@ public class CompanyActivity extends AppCompatActivity {
         ratingTextView = (TextView) findViewById(R.id.ratingTextView);
         ratingCountTextView = (TextView) findViewById(R.id.ratingCountTextView);
 
-        reviewArrayAdapter = new ArrayAdapter<Review>(this, android.R.layout.simple_list_item_1, reviewArrayList);
+        reviewArrayAdapter = new ReviewArrayAdapter(this, 0, reviewArrayList);
         NonScrollListView reviewsListView = (NonScrollListView) findViewById(R.id.reviewsListView);
         reviewsListView.setAdapter(reviewArrayAdapter);
 

@@ -14,6 +14,9 @@
     <string name="reviews_title">Reviews:</string>
     <string name="no_reviews">Nothing here yet</string>
 
+    <!-- ReviewArrayAdapter -->
+    <string name="small_message_ellipse">%1$s&#8230;</string>
+
     <!-- ReviewActivity -->
     <string name="submit_menu_item">Submit</string>
     <string name="posting_as_author">%1$s:</string>

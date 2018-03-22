@@ -49,6 +49,22 @@ public class Review implements Parcelable{
     }
 
     /**
+     * Author getter
+     * @return author name
+     */
+    public String getAuthor() {
+        return author;
+    }
+
+    /**
+     * Message getter
+     * @return message contents
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
      * Rating getter
      * @return rating value
      */
