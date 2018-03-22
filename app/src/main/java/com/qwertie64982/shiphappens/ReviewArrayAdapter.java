@@ -1,3 +1,9 @@
+/**
+ * An app for truckers to share information on which companies to work with or avoid.
+ *
+ * @author Maxwell Sherman
+ */
+
 package com.qwertie64982.shiphappens;
 
 import android.app.Activity;
@@ -19,6 +25,12 @@ public class ReviewArrayAdapter extends ArrayAdapter<Review> {
     private Context context;
     private List<Review> reviews;
 
+    /**
+     * EVC
+     * @param context adapter's context
+     * @param resource resource ID of which layout to follow (unused)
+     * @param objects which Review objects to display
+     */
     public ReviewArrayAdapter(Context context, int resource, ArrayList<Review> objects) {
         super(context, resource, objects);
 
@@ -26,12 +38,20 @@ public class ReviewArrayAdapter extends ArrayAdapter<Review> {
         this.reviews = objects;
     }
 
+    /**
+     * Runs when rendering each Review's View
+     * @param position index of item in the list
+     * @param convertView old View to reuse
+     * @param parent parent where this View will attach
+     * @return View object representing this Review
+     */
     @NonNull
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         Review review = reviews.get(position);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.list_review, null);
+        // TODO: Recycle view
 
         RatingBar smallRatingBar = (RatingBar) view.findViewById(R.id.smallRatingBar);
         TextView smallAuthorTextView = (TextView) view.findViewById(R.id.smallAuthorTextView);
