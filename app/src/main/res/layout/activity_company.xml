@@ -34,13 +34,36 @@
             android:stepSize="0.1"
             android:theme="@style/RatingBar" />
 
-        <TextView
-            android:id="@+id/numberReviewsTextView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:textAlignment="center"
-            android:textColor="@android:color/black" />
+            android:gravity="fill_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ratingTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="3dp"
+                android:layout_weight="1"
+                android:textAlignment="textEnd"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ratingCountTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_vertical|start"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="3dp"
+                android:layout_weight="1"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/addReviewButton"

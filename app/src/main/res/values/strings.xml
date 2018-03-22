@@ -9,7 +9,7 @@
     <string name="about_title">About this app</string>
     <string name="about_message">This is the demo version of the app.\n\nAuthor: Maxwell Sherman\nGithub: @Qwertie64982\n\nIcon made by Freepik from www.flaticon.com</string>
     <string name="github_button">GitHub</string>
-    <string name="number_reviews">%1$d reviews</string>
+    <string name="number_parentheses">(%1$d)</string>
     <string name="add_review">Add review</string>
     <string name="reviews_title">Reviews:</string>
     <string name="no_reviews">Nothing here yet</string>

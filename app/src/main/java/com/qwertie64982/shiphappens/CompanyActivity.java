@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 // TODO: Custom ArrayAdapter layout with name, rating, and comments (first 50 chars max, then ellipsis)
@@ -65,16 +66,18 @@ public class CompanyActivity extends AppCompatActivity {
     final String authorName = "John Doe";
 
     // Views
-    private TextView numberReviewsTextView;
+    private TextView ratingCountTextView;
     private Button addReviewButton;
     private TextView noReviewsTextView;
     private RatingBar averageRatingBar;
+    private TextView ratingTextView;
 
     // Logic
     private boolean hasLeftReview;
     private ArrayList<Review> reviewArrayList;
     private ArrayAdapter<Review> reviewArrayAdapter;
     private AlertDialog aboutDialog;
+    DecimalFormat ratingFormat;
 
     /**
      * onCreate
@@ -84,6 +87,7 @@ public class CompanyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company);
+        ratingFormat = new DecimalFormat("#.#");
 
         // Rename the action bar to the proper title (changing it in the Manifest renames it in the launcher too)
         if (getSupportActionBar() != null) {
@@ -127,15 +131,15 @@ public class CompanyActivity extends AppCompatActivity {
             noReviewsTextView.setVisibility(View.GONE);
         }
 
-        numberReviewsTextView = (TextView) findViewById(R.id.numberReviewsTextView);
-        numberReviewsTextView.setText(getString(R.string.number_reviews, reviewArrayList.size()));
+        ratingTextView = (TextView) findViewById(R.id.ratingTextView);
+        ratingCountTextView = (TextView) findViewById(R.id.ratingCountTextView);
 
         reviewArrayAdapter = new ArrayAdapter<Review>(this, android.R.layout.simple_list_item_1, reviewArrayList);
         NonScrollListView reviewsListView = (NonScrollListView) findViewById(R.id.reviewsListView);
         reviewsListView.setAdapter(reviewArrayAdapter);
 
         averageRatingBar = (RatingBar) findViewById(R.id.averageRatingBar);
-        updateAverageRatingBar();
+        updateAverageRatingInformation();
     }
 
     /**
@@ -172,13 +176,11 @@ public class CompanyActivity extends AppCompatActivity {
             Log.d(TAG, "onActivityResult: List now contains: " + reviewArrayList);
             reviewArrayAdapter.notifyDataSetChanged();
 
-            updateAverageRatingBar();
+            updateAverageRatingInformation();
 
             hasLeftReview = true;
             addReviewButton.setVisibility(View.GONE);
             noReviewsTextView.setVisibility(View.GONE);
-
-            numberReviewsTextView.setText(getString(R.string.number_reviews, reviewArrayList.size()));
         }
     }
 
@@ -236,7 +238,7 @@ public class CompanyActivity extends AppCompatActivity {
     /**
      * Updates averageRatingBar with every review from reviewArrayList
      */
-    private void updateAverageRatingBar() {
+    private void updateAverageRatingInformation() {
         if (reviewArrayList.size() > 0) {
             float total = 0;
             for (Review listViewReview : reviewArrayList) {
@@ -244,5 +246,8 @@ public class CompanyActivity extends AppCompatActivity {
             }
             averageRatingBar.setRating(total / reviewArrayList.size());
         }
+
+        ratingTextView.setText(ratingFormat.format(averageRatingBar.getRating()));
+        ratingCountTextView.setText(getString(R.string.number_parentheses, reviewArrayList.size()));
     }
 }
